@@ -73,6 +73,15 @@ pipeline{
                }
             }
         }
+        stage('JFrog'){
+             when { expression { params.action == 'create' }}
+            steps{
+                script{
+                     curl -u admin:password -X POST "http://44.203.77.177:8082/ui/admin/kubernetes-configmap-reload-0.0.1-SNAPSHOT.jar/example-repo-local"
+                }
+               
+            }
+        }
         stage('Docker Image Build'){
          when { expression {  params.action == 'create' } }
             steps{
